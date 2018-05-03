@@ -16,14 +16,27 @@ ENV SBT_VERSION ${SBT_VERSION:-1.1.4}
 RUN \
   echo "$SCALA_VERSION $SBT_VERSION" && \
   apt-get update -y && \
-  apt-get install -y bash curl openssh-client && \
-  curl -fsL "http://downloads.typesafe.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz" | tar xfz - -C /usr/local && \
-  ln -s "/usr/local/scala-$SCALA_VERSION/bin/*" /usr/local/bin/ && \
+  apt-get install -y bash \
+  curl \
+  openssh-client \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg2 \
+  software-properties-common \
+  && curl -fsL http://downloads.typesafe.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /usr/local && \
+  ln -s /usr/local/scala-$SCALA_VERSION/bin/* /usr/local/bin/ && \
   scala -version && \
   scalac -version
 
 RUN \
-  curl -fsL "https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz" | tar xfz - -C /usr/local && \
-  $(mv "/usr/local/sbt-launcher-packaging-$SBT_VERSION" /usr/local/sbt || true) \
+  curl -fsSL get.docker.com -o get-docker.sh && \
+  sh get-docker.sh
+  
+RUN \
+  curl -fsL https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar xfz - -C /usr/local && \
+  $(mv /usr/local/sbt-launcher-packaging-$SBT_VERSION /usr/local/sbt || true) \
   ln -s /usr/local/sbt/bin/* /usr/local/bin/ && \
   sbt sbt-version || sbt sbtVersion || true
+
+ENTRYPOINT ["/etc/init.d/docker","start"]
