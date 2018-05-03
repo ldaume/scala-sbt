@@ -5,7 +5,7 @@
 #
 
 # Pull base image
-FROM  openjdk:9-jdk-slim
+FROM  openjdk:10-jdk-slim
 
 ARG SCALA_VERSION
 ARG SBT_VERSION
