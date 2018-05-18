@@ -5,7 +5,7 @@
 #
 
 # Pull base image
-FROM  openjdk:9-jdk-slim
+FROM  openjdk:11-jdk-slim
 
 ARG SCALA_VERSION
 ARG SBT_VERSION
@@ -32,6 +32,9 @@ RUN \
 RUN \
   curl -fsSL get.docker.com -o get-docker.sh && \
   sh get-docker.sh
+
+RUN \
+  systemctl enable docker
 
 RUN \
   curl -fsL https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar xfz - -C /usr/local && \
