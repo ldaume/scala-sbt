@@ -7,7 +7,7 @@ Useful for building in environments like CircleCI v2.
 
 ## Base Docker Image ##
 
-* [openjdk:8-jre-alpine](https://hub.docker.com/_/openjdk)
+* [openjdk:jre-alpine](https://hub.docker.com/_/openjdk)
 
 
 ## Installation ##
