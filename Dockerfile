@@ -4,7 +4,7 @@
 # https://github.com/spikerlabs/scala-sbt (based on https://github.com/hseeberger/scala-sbt)
 # 
 
-FROM  openjdk:11-jdk-slim
+FROM  openjdk:12-jdk
 
 ARG SCALA_VERSION
 ARG SBT_VERSION
