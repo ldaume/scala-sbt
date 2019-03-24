@@ -7,4 +7,4 @@ Useful for building in environments like CircleCI v2.
 
 ## Base Docker Image ##
 
-* [ubuntu:rolling](https://hub.docker.com/_/ubuntu)
+* [ubuntu:rolling](https://hub.docker.com/_/ubuntuush)
