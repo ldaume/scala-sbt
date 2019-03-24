@@ -4,41 +4,44 @@
 # https://github.com/spikerlabs/scala-sbt (based on https://github.com/hseeberger/scala-sbt)
 # 
 
-FROM  openjdk:12-jdk
+#FROM  debian:stretch-slim
+FROM ubuntu:rolling
 
 ARG SCALA_VERSION
 ARG SBT_VERSION
+ARG JAVA_VERSION
 
 ENV SCALA_VERSION ${SCALA_VERSION:-2.12.8}
 ENV SBT_VERSION ${SBT_VERSION:-1.2.8}
+ENV JAVA_VERSION ${JAVA_VERSION:-12.0.0-open}
 
 RUN \
-  echo "$SCALA_VERSION $SBT_VERSION" && \
-  apt-get update -y && \
-  apt-get install -y bash \
+  apt-get update -y && apt-get upgrade -y \
+  && apt-get install -y bash \
   curl \
   openssh-client \
   apt-transport-https \
   ca-certificates \
   curl \
   gnupg2 \
-  software-properties-common \
-  && curl -fsL http://downloads.typesafe.com/scala/$SCALA_VERSION/scala-$SCALA_VERSION.tgz | tar xfz - -C /usr/local && \
-  ln -s /usr/local/scala-$SCALA_VERSION/bin/* /usr/local/bin/ && \
-  scala -version && \
-  scalac -version
+  tzdata \
+  bzip2 \
+  zip \
+  unzip \
+  xz-utils \
+  software-properties-common
+
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN \
-  curl -fsSL get.docker.com -o get-docker.sh && \
-  sh get-docker.sh
+  curl -s "https://get.sdkman.io" > sdk.sh \
+  && chmod +x sdk.sh \
+  && ./sdk.sh
 
 RUN \
-  systemctl enable docker
+  . "$HOME/.sdkman/bin/sdkman-init.sh" \
+  && sdk i java "$JAVA_VERSION" \
+  && sdk i sbt "$SBT_VERSION" \
+  && sdk i scala "$SCALA_VERSION"
 
-RUN \
-  curl -fsL https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar xfz - -C /usr/local && \
-  $(mv /usr/local/sbt-launcher-packaging-$SBT_VERSION /usr/local/sbt || true) \
-  ln -s /usr/local/sbt/bin/* /usr/local/bin/ && \
-  sbt sbt-version || sbt sbtVersion || true
-
-ENTRYPOINT ["/etc/init.d/docker","start"]
+RUN rm -rf "$HOME/.sdkman/archives" 
