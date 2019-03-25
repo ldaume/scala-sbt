@@ -53,8 +53,5 @@ RUN java -version && sbt sbtVersion && sbt scalaVersion
 RUN \
   curl -fsSL get.docker.com -o get-docker.sh && \
   sh get-docker.sh
-
-RUN \
-  systemctl enable docker
   
 ENTRYPOINT ["/etc/init.d/docker","start"]
