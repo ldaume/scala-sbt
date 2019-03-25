@@ -46,6 +46,6 @@ RUN \
 
 RUN rm -rf "$HOME/.sdkman/archives"
 
-ENV PATH "$HOME.sdkman/candidates/scala/current/bin/:$HOME/.sdkman/candidates/java/current/bin/:$HOME/.sdkman/candidates/sbt/current/bin/:$PATH"
+ENV PATH "/root/.sdkman/candidates/scala/current/bin/:/root/.sdkman/candidates/java/current/bin/:/root/.sdkman/candidates/sbt/current/bin/:$PATH"
 
 RUN java -version && sbt sbtVersion && sbt scalaVersion
