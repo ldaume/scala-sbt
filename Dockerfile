@@ -50,9 +50,8 @@ ENV PATH "/root/.sdkman/candidates/scala/current/bin/:/root/.sdkman/candidates/j
 
 RUN java -version && sbt sbtVersion && sbt scalaVersion
 
-#RUN \
-#  curl -fsSL get.docker.com -o get-docker.sh && \
-#  sh get-docker.sh
-
+RUN \
+  curl -fsSL get.docker.com -o get-docker.sh && \
+  sh get-docker.sh
   
-#ENTRYPOINT ["/etc/init.d/docker","start"]
+ENTRYPOINT ["/etc/init.d/docker","start"]
