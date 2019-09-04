@@ -2,7 +2,7 @@
 # Scala and sbt Dockerfile
 #
 # https://github.com/spikerlabs/scala-sbt (based on https://github.com/hseeberger/scala-sbt)
-# 
+#
 
 FROM  openjdk:11-jdk-slim
 
@@ -10,7 +10,7 @@ ARG SCALA_VERSION
 ARG SBT_VERSION
 
 ENV SCALA_VERSION ${SCALA_VERSION:-2.12.8}
-ENV SBT_VERSION ${SBT_VERSION:-1.2.8}
+ENV SBT_VERSION ${SBT_VERSION:-1.3.0}
 
 RUN \
   echo "$SCALA_VERSION $SBT_VERSION" && \
