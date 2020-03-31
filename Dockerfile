@@ -2,7 +2,7 @@
 # Scala and sbt Dockerfile
 #
 # https://github.com/spikerlabs/scala-sbt (based on https://github.com/hseeberger/scala-sbt)
-# 
+#
 
 #FROM  debian:stretch-slim
 FROM ubuntu:rolling
@@ -11,9 +11,9 @@ ARG SCALA_VERSION
 ARG SBT_VERSION
 ARG JAVA_VERSION
 
-ENV SCALA_VERSION ${SCALA_VERSION:-2.12.10}
-ENV SBT_VERSION ${SBT_VERSION:-1.3.2}
-ENV JAVA_VERSION ${JAVA_VERSION:-13.0.0-open}
+ENV SCALA_VERSION ${SCALA_VERSION:-2.12.11}
+ENV SBT_VERSION ${SBT_VERSION:-1.3.8}
+ENV JAVA_VERSION ${JAVA_VERSION:-14.0.0-open}
 
 RUN \
   apt-get update -y && apt-get upgrade -y \
@@ -53,5 +53,5 @@ RUN java -version && sbt sbtVersion && sbt scalaVersion
 RUN \
   curl -fsSL get.docker.com -o get-docker.sh && \
   sh get-docker.sh
-  
+
 ENTRYPOINT ["/etc/init.d/docker","start"]
